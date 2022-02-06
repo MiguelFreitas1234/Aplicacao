@@ -48,16 +48,30 @@ public class FormVeiculos {
     private JTextField textFieldAltIDPesquisa;
     private JTextField textFieldAltIDPreço;
     private JLabel altIdLabelImagem;
+    private JButton buttonPrimeiro;
+    private JButton buttonAnterior;
+    private JButton buttonProximo;
+    private JButton buttonUltimo;
+    private JTextField textFieldConButtonModelo;
+    private JTextField textFieldConButtonPreço;
+    private JTextField textFieldConButtonQuantidade;
+    private JTextField textFieldConButtonMarca;
+    private JLabel labelImagemConButton;
+    private JButton button1;
+    private JButton buttonPrimeiroID;
+    private JButton buttonAnteriorID;
+    private JButton buttonProximoID;
+    private JButton buttonUltimoID;
 
     String path=null;
     Connection con;
     PreparedStatement pst;
-    private ResultSet rs;
+    private ResultSet rs1;
     private byte[] userImage;
 
     public void setVisible(boolean b)
     {
-        JFrame frame=new JFrame("Escolha");
+        JFrame frame=new JFrame("Veiculos");
         frame.setContentPane(new FormVeiculos().PanelVeiculos);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(650,700);
@@ -72,6 +86,8 @@ public class FormVeiculos {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/bdlojamiguelfreitas", "root","1234");
             System.out.println("Success");
+            Statement st=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rs1=st.executeQuery("select NomeProd, Preço, Quantidade, categorias_NomeCat, Imagem from produtos");
         }
         catch (ClassNotFoundException ex)
         {
@@ -90,6 +106,8 @@ public class FormVeiculos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String modelo, preco, quantidade, marca;
+
+                Icon icon = new ImageIcon(getClass().getResource("/Exercicio/Recursos/clear.png"));
 
                 modelo = textFieldModelo.getText();
                 preco = textFieldPreço.getText();
@@ -116,13 +134,13 @@ public class FormVeiculos {
                     JOptionPane.showMessageDialog(null, "Adicione uma Marca!");
 
                 }
-                if(labelImagem.getIcon() == null)
+                if(labelImagem.getIcon() == icon)
                 {
                     JOptionPane.showMessageDialog(null, "Adicione uma Imagem!");
 
                 }
 
-                if(textFieldModelo.getText().trim().isEmpty() || textFieldPreço.getText().trim().isEmpty() || textFieldQuantidade.getText().trim().isEmpty() || textFieldMarca.getText().trim().isEmpty() || labelImagem.getIcon() == null)
+                if(textFieldModelo.getText().trim().isEmpty() || textFieldPreço.getText().trim().isEmpty() || textFieldQuantidade.getText().trim().isEmpty() || textFieldMarca.getText().trim().isEmpty() || labelImagem.getIcon() == icon)
                 {
 
                 }
@@ -142,7 +160,7 @@ public class FormVeiculos {
                         textFieldPreço.setText("");
                         textFieldQuantidade.setText("");
                         textFieldMarca.setText("");
-                        labelImagem.setIcon(null);
+                        labelImagem.setIcon(icon);
 
                     }
                     catch (SQLException e1)
@@ -157,6 +175,7 @@ public class FormVeiculos {
         altPesquisarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Icon icon = new ImageIcon(getClass().getResource("/Exercicio/Recursos/clear.png"));
                 try
                 {
 
@@ -189,7 +208,7 @@ public class FormVeiculos {
                         textFieldAltPreço.setText("");
                         textFieldAltQuantidade.setText("");
                         textFieldAltMarca.setText("");
-                        altLabelImagem.setIcon(null);
+                        altLabelImagem.setIcon(icon);
                         JOptionPane.showMessageDialog(null,"ID inválido");
 
                     }
@@ -204,6 +223,8 @@ public class FormVeiculos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String modelo,preco,quantidade, marca, id;
+
+                Icon icon = new ImageIcon(getClass().getResource("/Exercicio/Recursos/clear.png"));
 
                 modelo = textFieldAltModelo.getText();
                 preco = textFieldAltPreço.getText();
@@ -230,13 +251,13 @@ public class FormVeiculos {
                     JOptionPane.showMessageDialog(null, "Adicione uma Marca!");
 
                 }
-                if(altLabelImagem.getIcon() == null)
+                if(altLabelImagem.getIcon() == icon)
                 {
                     JOptionPane.showMessageDialog(null, "Adicione uma Imagem!");
 
                 }
 
-                if(textFieldAltModelo.getText().trim().isEmpty() || textFieldAltPreço.getText().trim().isEmpty() || textFieldAltQuantidade.getText().trim().isEmpty() || textFieldAltMarca.getText().trim().isEmpty() || altLabelImagem.getIcon() == null)
+                if(textFieldAltModelo.getText().trim().isEmpty() || textFieldAltPreço.getText().trim().isEmpty() || textFieldAltQuantidade.getText().trim().isEmpty() || textFieldAltMarca.getText().trim().isEmpty() || altLabelImagem.getIcon() == icon)
                 {
 
                 }
@@ -261,7 +282,7 @@ public class FormVeiculos {
                         textFieldAltQuantidade.setText("");
                         textFieldAltPesquisa.requestFocus();
                         textFieldAltMarca.setText("");
-                        altLabelImagem.setIcon(null);
+                        altLabelImagem.setIcon(icon);
                     }
 
                     catch (SQLException e1)
@@ -320,6 +341,7 @@ public class FormVeiculos {
         encontrarVeiculoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Icon icon = new ImageIcon(getClass().getResource("/Exercicio/Recursos/clear.png"));
                 try
                 {
                     String id = textFieldNomeJogadorAApagar.getText();
@@ -351,6 +373,7 @@ public class FormVeiculos {
                         textFieldEliPreço.setText("");
                         textFieldEliQuantidade.setText("");
                         textFieldEliMarca.setText("");
+                        eliLabelImagem.setIcon(icon);
 
                         JOptionPane.showMessageDialog(null,"ID inválido");
                     }
@@ -368,8 +391,9 @@ public class FormVeiculos {
                 String id;
 
 
-                id = textFieldNomeJogadorAApagar.getText();
+                Icon icon = new ImageIcon(getClass().getResource("/Exercicio/Recursos/clear.png"));
 
+                id = textFieldNomeJogadorAApagar.getText();
 
                 try {
                     pst = con.prepareStatement("delete from produtos where id = ?");
@@ -382,7 +406,7 @@ public class FormVeiculos {
                     textFieldEliPreço.setText("");
                     textFieldEliQuantidade.setText("");
                     textFieldEliMarca.setText("");
-                    eliLabelImagem.setIcon(null);
+                    eliLabelImagem.setIcon(icon);
                 }
                 catch (SQLException e1)
                 {
@@ -465,13 +489,14 @@ public class FormVeiculos {
         consultarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Icon icon = new ImageIcon(getClass().getResource("/Exercicio/Recursos/clear.png"));
                 try
                 {
                     textFieldAltIDModelo.setText("");
                     textFieldAltIDPreço.setText("");
                     textFieldAltIDQuantidade.setText("");
                     textFieldAltIDMarca.setText("");
-                    altIdLabelImagem.setIcon(null);
+                    altIdLabelImagem.setIcon(icon);
 
                     String id = textFieldAltIDPesquisa.getText();
                     pst = con.prepareStatement("select NomeProd,Preço,Quantidade,categorias_NomeCat,Imagem from produtos where id = ?");
@@ -494,7 +519,6 @@ public class FormVeiculos {
                         textFieldAltIDPreço.setText(preço);
                         textFieldAltIDQuantidade.setText(quantidade);
                         textFieldAltIDMarca.setText(marca);
-
                     }
                     else
                     {
@@ -502,14 +526,103 @@ public class FormVeiculos {
                         textFieldAltIDPreço.setText("");
                         textFieldAltIDQuantidade.setText("");
                         textFieldAltIDMarca.setText("");
-                        altIdLabelImagem.setIcon(null);
+                        altIdLabelImagem.setIcon(icon);
                         JOptionPane.showMessageDialog(null,"ID inválido");
-
                     }
                 }
                 catch (SQLException ex)
                 {
                     ex.printStackTrace();
+                }
+            }
+        });
+        buttonPrimeiro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try
+                {
+                    rs1.first();
+                    textFieldConButtonModelo.setText(rs1.getString("NomeProd"));
+                    textFieldConButtonPreço.setText(rs1.getString("Preço"));
+                    textFieldConButtonQuantidade.setText(rs1.getString("Quantidade"));
+                    textFieldConButtonMarca.setText(rs1.getString("categorias_NomeCat"));
+                    Blob blob=rs1.getBlob("Imagem");
+                    byte[] imageBytes=blob.getBytes(1,(int)blob.length());
+                    ImageIcon imgIcon= new ImageIcon(new ImageIcon(imageBytes).getImage().getScaledInstance(250,250, Image.SCALE_DEFAULT));
+                    labelImagemConButton.setIcon(imgIcon);
+                } catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        buttonAnterior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try
+                {
+                    if(!rs1.isFirst())
+                    {
+                        rs1.previous();
+                        textFieldConButtonModelo.setText(rs1.getString("NomeProd"));
+                        textFieldConButtonPreço.setText(rs1.getString("Preço"));
+                        textFieldConButtonQuantidade.setText(rs1.getString("Quantidade"));
+                        textFieldConButtonMarca.setText(rs1.getString("categorias_NomeCat"));
+                        Blob blob=rs1.getBlob("Imagem");
+                        byte[] imageBytes = blob.getBytes(1, (int)blob.length());
+                        ImageIcon imgIcon = new ImageIcon(new ImageIcon(imageBytes).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
+                        labelImagemConButton.setIcon(imgIcon);
+                    }
+                }
+                catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        buttonProximo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try
+                {
+                    if(!rs1.isLast())
+                    {
+                        rs1.next();
+                        textFieldConButtonModelo.setText(rs1.getString("NomeProd"));
+                        textFieldConButtonPreço.setText(rs1.getString("Preço"));
+                        textFieldConButtonQuantidade.setText(rs1.getString("Quantidade"));
+                        textFieldConButtonMarca.setText(rs1.getString("categorias_NomeCat"));
+                        Blob blob=rs1.getBlob("Imagem");
+                        byte[] imageBytes = blob.getBytes(1, (int)blob.length());
+                        ImageIcon imgIcon = new ImageIcon(new ImageIcon(imageBytes).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
+                        labelImagemConButton.setIcon(imgIcon);
+                    }
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        buttonUltimo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try
+                {
+                    rs1.last();
+                    textFieldConButtonModelo.setText(rs1.getString("NomeProd"));
+                    textFieldConButtonPreço.setText(rs1.getString("Preço"));
+                    textFieldConButtonQuantidade.setText(rs1.getString("Quantidade"));
+                    textFieldConButtonMarca.setText(rs1.getString("categorias_NomeCat"));
+                    Blob blob=rs1.getBlob("Imagem");
+                    byte[] imageBytes=blob.getBytes(1,(int)blob.length());
+                    ImageIcon imgIcon= new ImageIcon(new ImageIcon(imageBytes).getImage().getScaledInstance(250,250, Image.SCALE_DEFAULT));
+                    labelImagemConButton.setIcon(imgIcon);
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
                 }
             }
         });

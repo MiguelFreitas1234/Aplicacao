@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class FormLogin {
     private JTextField textFieldUsername;
     private JButton entrarButton;
-    private JButton cancelarButton;
+    private JButton registarButton;
     private JPanel panelLogin;
     private JPasswordField passwordField;
 
@@ -51,6 +51,12 @@ public class FormLogin {
                 {
                     JOptionPane.showMessageDialog(null,"Erro" +ex.getMessage());
                 }
+            }
+        });
+        registarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new FormRegisto().setVisible(true);
             }
         });
     }

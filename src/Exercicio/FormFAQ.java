@@ -8,7 +8,7 @@ public class FormFAQ {
 
     public void setVisible(boolean b)
     {
-        JFrame frame=new JFrame("Escolha");
+        JFrame frame=new JFrame("Perguntas frequentes");
         frame.setContentPane(new FormFAQ().PanelFAQ);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
